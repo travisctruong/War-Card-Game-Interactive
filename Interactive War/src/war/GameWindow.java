@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,7 +15,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintStream;
 import java.util.ArrayList;
+import javax.swing.JTextField;
 
 public class GameWindow extends JFrame {
 
@@ -93,18 +97,38 @@ public class GameWindow extends JFrame {
 				Game playWar = new Game();
 				playWar.startGame();
 				
-				JLabel playerCardLabel1 = new JLabel();
-				playerCardLabel1.setBounds(86,69,241,277);
-				playerCardLabel1.setBackground(new Color(255,255,255));
-				frame.getContentPane().add(playerCardLabel1);
+				JLabel playerCardLabel = new JLabel();
+				playerCardLabel.setBounds(11,69,241,277);
+				playerCardLabel.setBackground(new Color(255,255,255));
+				frame.getContentPane().add(playerCardLabel);
 				
-				JLabel playerCardLabel2 = new JLabel();
-				playerCardLabel2.setBounds(654,69,241,277);
-				playerCardLabel2.setBackground(new Color(255,255,255));
-				frame.getContentPane().add(playerCardLabel2);
+				JLabel playerLabel = new JLabel();
+				playerLabel.setText("Player's Card");
+				playerLabel.setBounds(70, 350, 131, 38);
+				playerLabel.setForeground(Color.GREEN);
+				playerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+				playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				playerLabel.setVerticalAlignment(SwingConstants.CENTER);
+				playerLabel.setFont(new Font("Onyx", Font.PLAIN, 20));
+				frame.getContentPane().add(playerLabel);
+				
+				JLabel opponentCardLabel = new JLabel();
+				opponentCardLabel.setBounds(734,69,241,277);
+				opponentCardLabel.setBackground(new Color(255,255,255));
+				frame.getContentPane().add(opponentCardLabel);
+				
+				JLabel opponentLabel = new JLabel();
+				opponentLabel.setText("Opponent's Card");
+				opponentLabel.setBounds(790, 350, 131, 38);
+				opponentLabel.setForeground(Color.RED);
+				opponentLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+				opponentLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				opponentLabel.setVerticalAlignment(SwingConstants.CENTER);
+				opponentLabel.setFont(new Font("Onyx", Font.PLAIN, 20));
+				frame.getContentPane().add(opponentLabel);
 				
 				JLabel scoreLabel = new JLabel();
-				scoreLabel.setText("Score: " + playWar.getPlayer1().getScore() + "-" + playWar.getPlayer2().getScore());
+				scoreLabel.setText("Score: " + playWar.getPlayer().getScore() + "-" + playWar.getOpponent().getScore());
 				scoreLabel.setForeground(new Color(255, 255, 255));
 				scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 				scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,6 +136,17 @@ public class GameWindow extends JFrame {
 				scoreLabel.setFont(new Font("Onyx", Font.PLAIN, 40));
 				scoreLabel.setBounds(369, 12, 252, 50);
 				frame.getContentPane().add(scoreLabel);
+				
+				JTextArea dialogueTextArea = new JTextArea();
+				dialogueTextArea.setEditable(false);
+				PrintStream printStream = new PrintStream(new RedirectOutput(dialogueTextArea));
+				System.setOut(printStream);
+				
+				JScrollPane dialogueScrollPane = new JScrollPane(dialogueTextArea);
+				dialogueScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				dialogueScrollPane.setBounds(279,73,428,311);
+				frame.getContentPane().add(dialogueScrollPane);
+				
 				
 				JButton playCardButton = new JButton("Play Card");
 				playCardButton.setForeground(new Color(60, 76, 36));
@@ -130,14 +165,14 @@ public class GameWindow extends JFrame {
 						Image scaleCard1 = playerCard1.getImage();
 						Image modifiedCard1 = scaleCard1.getScaledInstance(241, 277, java.awt.Image.SCALE_SMOOTH);
 						playerCard1 = new ImageIcon(modifiedCard1);
-						playerCardLabel1.setIcon(playerCard1);
+						playerCardLabel.setIcon(playerCard1);
 						
 						Image scaleCard2 = playerCard2.getImage();
 						Image modifiedCard2 = scaleCard2.getScaledInstance(241, 277, java.awt.Image.SCALE_SMOOTH);
 						playerCard2 = new ImageIcon(modifiedCard2);
-						playerCardLabel2.setIcon(playerCard2);
+						opponentCardLabel.setIcon(playerCard2);
 						
-						scoreLabel.setText("Score: " + playWar.getPlayer1().getScore() + "-" + playWar.getPlayer2().getScore());
+						scoreLabel.setText("Score: " + playWar.getPlayer().getScore() + "-" + playWar.getOpponent().getScore());
 						
 						frame.revalidate();
 						frame.repaint();
