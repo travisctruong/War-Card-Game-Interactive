@@ -40,7 +40,7 @@ public class Deck {
 		
 		for (String suit : suits) {
 			for (int i = 0; i < ranks.length; i++) {
-				Card card = new Card(suit, ranks[i], values[i], "war/Cards/" + ranks[i] + " of " + suit + ".png");
+				Card card = new Card(suit, ranks[i], values[i], "src/war/Cards/" + ranks[i] + " of " + suit + ".png");
 				this.cards.add(card);
 			}
 		}

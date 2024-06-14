@@ -50,7 +50,7 @@ public class Menu extends JFrame {
 		frame.setBackground(new Color(150, 75, 0));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setTitle("War Card Game");
+		frame.setTitle("War - Card Game");
 		
 		
 		JButton startButton = new JButton("Start Game");
@@ -87,15 +87,15 @@ public class Menu extends JFrame {
 			}
 		});
 
-		JLabel label1 = new JLabel("WAR");
-		label1.setForeground(new Color(255, 255, 255));
-		label1.setBackground(new Color(150, 75, 0));
-		label1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		label1.setHorizontalAlignment(SwingConstants.CENTER);
-		label1.setVerticalAlignment(SwingConstants.CENTER);
-		label1.setFont(new Font("Onyx", Font.PLAIN, 70));
-		label1.setBounds(311, 87, 400, 100);
-		frame.getContentPane().add(label1);
+		JLabel titleLabel = new JLabel("WAR");
+		titleLabel.setForeground(new Color(255, 255, 255));
+		titleLabel.setBackground(new Color(150, 75, 0));
+		titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setVerticalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(new Font("Onyx", Font.PLAIN, 70));
+		titleLabel.setBounds(311, 87, 400, 100);
+		frame.getContentPane().add(titleLabel);
 
 	}
 }
