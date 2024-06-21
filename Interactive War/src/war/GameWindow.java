@@ -86,7 +86,7 @@ public class GameWindow extends JFrame {
 		
 		JButton startButton = new JButton("Start Game");
 		startButton.setForeground(new Color(60, 76, 36));
-		startButton.setFont(new Font("Onyx", Font.PLAIN, 20));
+		startButton.setFont(new Font("Onyx", Font.PLAIN, 30));
 		startButton.setBounds(414, 409, 165, 58);
 		frame.getContentPane().add(startButton);
 		startButton.addActionListener(new ActionListener() {
@@ -150,17 +150,17 @@ public class GameWindow extends JFrame {
 				
 				JButton playCardButton = new JButton("Play Card");
 				playCardButton.setForeground(new Color(60, 76, 36));
-				playCardButton.setFont(new Font("Onyx", Font.PLAIN, 20));
+				playCardButton.setFont(new Font("Onyx", Font.PLAIN, 30));
 				playCardButton.setBounds(414, 409, 165, 58);
 				frame.getContentPane().add(playCardButton);
 				playCardButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
-						ArrayList<Card> cards = playWar.playCards();
+						ArrayList<Card> cards = new ArrayList<Card>();
+						cards = playWar.playCards(cards);
 						playWar.playRound(cards);
 						ImageIcon playerCard1 = cards.get(0).getImage();
 						ImageIcon playerCard2 = cards.get(1).getImage();
-						cards.clear();
 						
 						Image scaleCard1 = playerCard1.getImage();
 						Image modifiedCard1 = scaleCard1.getScaledInstance(241, 277, java.awt.Image.SCALE_SMOOTH);
@@ -176,6 +176,23 @@ public class GameWindow extends JFrame {
 						
 						frame.revalidate();
 						frame.repaint();
+						
+						int gameOver = playWar.determineVictor();
+						if (gameOver == 1 || gameOver == -1) {
+							playWar.declareVictor();
+							playCardButton.setVisible(false);
+							JButton menuButton= new JButton("Main Menu");
+							menuButton.setForeground(new Color(60, 76, 36));
+							menuButton.setFont(new Font("Onyx", Font.PLAIN, 30));
+							menuButton.setBounds(414, 409, 165, 58);
+							frame.getContentPane().add(menuButton);
+							menuButton.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									Menu.main(null);
+									frame.dispose();
+								}
+							});
+						}
 					}
 				});
 

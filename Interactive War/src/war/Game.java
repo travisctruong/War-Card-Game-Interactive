@@ -110,10 +110,9 @@ public class Game {
 	}
 	
 	
-	public ArrayList<Card> playCards() {
+	public ArrayList<Card> playCards(ArrayList<Card> cards) {
 		Card card1 = this.player.playCard();
 		Card card2 = this.opponent.playCard();
-		ArrayList<Card> cards = new ArrayList<Card>();
 		assembleCards(card1, card2, cards);
 		return cards;
 	}
@@ -140,15 +139,12 @@ public class Game {
 			System.out.println("Both players played " + card2.getRank() + " of " + card2.getSuit());     // Enter war
 			System.out.println("\nWAR!!!");
 
-			if ((this.player.getScore() < 4 && this.player.getScore() != 0) || (this.opponent.getScore() < 4 && this.opponent.getScore() != 0)) {
-				warSmall(cards);
-			}
-			else if (this.player.getScore() == 0) {          // Player 1 cannot enter war
+			if (this.player.getScore() < 4) {          // Player 1 cannot enter war
 				this.opponent.winRound(cards);
 				resetUsed();
 				System.out.println(this.player.getName() + " has insufficient cards to play out the war");
 			}
-			else if (this.opponent.getScore() == 0) {          // Player 2 cannot enter war
+			else if (this.opponent.getScore() < 4) {          // Player 2 cannot enter war
 				this.player.winRound(cards);
 				resetUsed();
 				System.out.println(this.opponent.getName() + " has insufficient cards to play out the war");

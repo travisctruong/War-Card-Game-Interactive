@@ -67,7 +67,7 @@ public class Menu extends JFrame {
 		
 		JButton rulesButton = new JButton("Rules");
 		rulesButton.setForeground(new Color(60, 76, 36));
-		rulesButton.setFont(new Font("Onyx", Font.PLAIN, 24));
+		rulesButton.setFont(new Font("Onyx", Font.PLAIN, 30));
 		rulesButton.setBounds(411, 386, 200, 64);
 		frame.getContentPane().add(rulesButton);
 		rulesButton.addActionListener(new ActionListener() {
@@ -78,7 +78,7 @@ public class Menu extends JFrame {
 		
 		JButton quitButton = new JButton("Quit");
 		quitButton.setForeground(new Color(60, 76, 36));
-		quitButton.setFont(new Font("Onyx", Font.PLAIN, 24));
+		quitButton.setFont(new Font("Onyx", Font.PLAIN, 30));
 		quitButton.setBounds(411, 461, 200, 64);
 		frame.getContentPane().add(quitButton);
 		quitButton.addActionListener(new ActionListener() {
@@ -93,7 +93,7 @@ public class Menu extends JFrame {
 		titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.CENTER);
-		titleLabel.setFont(new Font("Onyx", Font.PLAIN, 70));
+		titleLabel.setFont(new Font("Onyx", Font.PLAIN, 110));
 		titleLabel.setBounds(311, 87, 400, 100);
 		frame.getContentPane().add(titleLabel);
 
