@@ -21,7 +21,8 @@ import javax.swing.JTextField;
 
 public class GameWindow extends JFrame {
 
-	private JFrame frame;
+	private static JFrame frame;
+	private boolean flag;
 
 	/**
 	 * Launch the application.
@@ -44,6 +45,59 @@ public class GameWindow extends JFrame {
 	 */
 	public GameWindow() {
 		initialize();
+	}
+	
+	public void showCards(Game playWar, JLabel playerCardLabel, JLabel opponentCardLabel) {
+		ImageIcon playerCard1 = playWar.getPlayer().getCardInPlay().getImage();
+		ImageIcon playerCard2 = playWar.getOpponent().getCardInPlay().getImage();
+		
+		Image scaleCard1 = playerCard1.getImage();
+		Image modifiedCard1 = scaleCard1.getScaledInstance(241, 277, java.awt.Image.SCALE_SMOOTH);
+		playerCard1 = new ImageIcon(modifiedCard1);
+		playerCardLabel.setIcon(playerCard1);
+		
+		Image scaleCard2 = playerCard2.getImage();
+		Image modifiedCard2 = scaleCard2.getScaledInstance(241, 277, java.awt.Image.SCALE_SMOOTH);
+		playerCard2 = new ImageIcon(modifiedCard2);
+		opponentCardLabel.setIcon(playerCard2);
+	}
+	
+	public void checkWinner(Game playWar, JButton playCardButton) {
+		int end = playWar.declareVictor();
+		if (end == 1 || end == -1) {
+			JLabel winnerLabel = new JLabel();
+			winnerLabel.setText("WINNER");
+			winnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+			winnerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			winnerLabel.setVerticalAlignment(SwingConstants.CENTER);
+			winnerLabel.setFont(new Font("Onyx", Font.PLAIN, 60));
+			frame.getContentPane().add(winnerLabel);
+			
+			if (end == 1) {
+				winnerLabel.setBounds(70, 450, 131, 38);
+				winnerLabel.setForeground(Color.GREEN);
+			}
+			else if (end == -1) {
+				winnerLabel.setBounds(790, 450, 131, 38);
+				winnerLabel.setForeground(Color.RED);
+			}
+			
+			playCardButton.setVisible(false);
+			JButton menuButton= new JButton("Main Menu");
+			menuButton.setForeground(new Color(60, 76, 36));
+			menuButton.setFont(new Font("Onyx", Font.PLAIN, 30));
+			menuButton.setBounds(414, 409, 165, 58);
+			frame.getContentPane().add(menuButton);
+			menuButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ConfirmationWindow.main(null);
+				}
+			});
+		}
+	}
+	
+	public static JFrame getFrame() {
+		return frame;
 	}
 
 	/**
@@ -147,6 +201,12 @@ public class GameWindow extends JFrame {
 				dialogueScrollPane.setBounds(279,73,428,311);
 				frame.getContentPane().add(dialogueScrollPane);
 				
+				JButton playWarButton = new JButton("Play War");
+				playWarButton.setForeground(new Color(60, 76, 36));
+				playWarButton.setFont(new Font("Onyx", Font.PLAIN, 30));
+				playWarButton.setBounds(414, 409, 165, 58);
+				frame.getContentPane().add(playWarButton);
+				playWarButton.setVisible(false);
 				
 				JButton playCardButton = new JButton("Play Card");
 				playCardButton.setForeground(new Color(60, 76, 36));
@@ -157,47 +217,52 @@ public class GameWindow extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						
 						ArrayList<Card> cards = new ArrayList<Card>();
-						cards = playWar.playCards(cards);
-						playWar.playRound(cards);
-						ImageIcon playerCard1 = cards.get(0).getImage();
-						ImageIcon playerCard2 = cards.get(1).getImage();
+						flag = playWar.playRound(cards);
 						
-						Image scaleCard1 = playerCard1.getImage();
-						Image modifiedCard1 = scaleCard1.getScaledInstance(241, 277, java.awt.Image.SCALE_SMOOTH);
-						playerCard1 = new ImageIcon(modifiedCard1);
-						playerCardLabel.setIcon(playerCard1);
+						showCards(playWar, playerCardLabel, opponentCardLabel);
 						
-						Image scaleCard2 = playerCard2.getImage();
-						Image modifiedCard2 = scaleCard2.getScaledInstance(241, 277, java.awt.Image.SCALE_SMOOTH);
-						playerCard2 = new ImageIcon(modifiedCard2);
-						opponentCardLabel.setIcon(playerCard2);
+						if (flag) {
+							int gambitSize = 3;
+							playWarButton.setVisible(true);
+								
+							playWarButton.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									while (flag) {
+										int direct = playWar.startSubWar(cards);
+										if (direct == 1) {
+											ArrayList<Object> returns = playWar.warSmall(cards);
+											ArrayList<Card> cards = (ArrayList<Card>) returns.get(0);
+											int gambitSize = (int) returns.get(1);
+											flag = playWar.computeWar(cards, gambitSize);
+										}
+										else if (direct == 2) {
+											flag = playWar.warAgainSmall(playWar.getPlayer().getCardInPlay(), playWar.getOpponent().getCardInPlay(), cards, gambitSize);
+										}
+										else {
+											playWar.warRegular(cards);
+											flag = playWar.computeWar(cards, gambitSize);
+										}
+										showCards(playWar, playerCardLabel, opponentCardLabel);
+									}
+									scoreLabel.setText("Score: " + playWar.getPlayer().getScore() + "-" + playWar.getOpponent().getScore());
+									playWarButton.setVisible(false);
+									checkWinner(playWar, playCardButton);
+								}
+							});							
+						}
 						
 						scoreLabel.setText("Score: " + playWar.getPlayer().getScore() + "-" + playWar.getOpponent().getScore());
 						
 						frame.revalidate();
 						frame.repaint();
-						
-						int gameOver = playWar.determineVictor();
-						if (gameOver == 1 || gameOver == -1) {
-							playWar.declareVictor();
-							playCardButton.setVisible(false);
-							JButton menuButton= new JButton("Main Menu");
-							menuButton.setForeground(new Color(60, 76, 36));
-							menuButton.setFont(new Font("Onyx", Font.PLAIN, 30));
-							menuButton.setBounds(414, 409, 165, 58);
-							frame.getContentPane().add(menuButton);
-							menuButton.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									Menu.main(null);
-									frame.dispose();
-								}
-							});
-						}
+						checkWinner(playWar, playCardButton);
 					}
 				});
 
 				frame.revalidate();
 				frame.repaint();
+				
+				
 			}
 		});
 	}

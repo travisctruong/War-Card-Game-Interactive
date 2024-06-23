@@ -34,8 +34,6 @@ public class RulesWindow extends JFrame {
 	 * Create the application.
 	 */
 	public RulesWindow() {
-
-		
 		initialize();
 	}
 
