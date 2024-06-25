@@ -5,15 +5,20 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.Font;
-import javax.swing.JLayeredPane;
 
-public class RulesWindow extends JFrame {
+/**
+ * RulesWindow Swing Class - Initializes a UI rules window
+ * 
+ * @author Travis Truong
+ *
+ */
+public class RulesWindow {
 
 	private JFrame frame;
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -29,6 +34,7 @@ public class RulesWindow extends JFrame {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the application.
@@ -36,12 +42,13 @@ public class RulesWindow extends JFrame {
 	public RulesWindow() {
 		initialize();
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame();													// Initializes JFrame
 		frame.getContentPane().setBackground(new Color(53, 94, 59));		
 		frame.setBounds(100, 100, 700, 467);
 		frame.setBackground(new Color(150, 75, 0));
@@ -49,15 +56,13 @@ public class RulesWindow extends JFrame {
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Rules");
 		
-		getContentPane().setLayout(null);
-		
-		JLabel rulesLabel = new JLabel("Rules");
+		JLabel rulesLabel = new JLabel("Rules");								// Creates rules screen title
 		rulesLabel.setForeground(new Color(255, 255, 255));
 		rulesLabel.setFont(new Font("Onyx", Font.BOLD, 32));
 		rulesLabel.setBounds(331, 11, 300, 40);
 		frame.getContentPane().add(rulesLabel);
 		
-		JTextArea rulesText = new JTextArea();
+		JTextArea rulesText = new JTextArea();									// Displays rules of game
 		rulesText.setForeground(new Color(255, 255, 255));
 		rulesText.setFont(new Font("Onyx", Font.PLAIN, 18));
 		rulesText.setBackground(new Color(53, 94, 59));

@@ -4,6 +4,12 @@ import java.io.IOException;
 
 import javax.swing.JTextArea;
 
+/**
+ * RedirectOutput Class - Directs print statements to JTextArea
+ * 
+ * @author Travis Truong
+ *
+ */
 public class RedirectOutput extends java.io.OutputStream {
 	
 	private JTextArea outputTextArea;

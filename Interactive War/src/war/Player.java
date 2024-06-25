@@ -14,7 +14,7 @@ public class Player {
 	private ArrayList<Card> winnings;   // Cards won before being shuffled back into player's hand
 	private String name;
 	private int usedCards;    // Number of cards used in a round
-	private Card cardInPlay;
+	private Card faceUp;  // Player's face-up card
 	
 	
 	/**
@@ -26,7 +26,7 @@ public class Player {
 		this.winnings = new ArrayList<Card>();
 		this.name = name;
 		this.usedCards = 0;
-		this.cardInPlay = null;
+		this.faceUp = null;
 	}
 	
 	
@@ -58,6 +58,15 @@ public class Player {
 	
 	
 	/**
+	 * Face-Up Card Getter
+	 * @return
+	 */
+	public Card getFaceUp() {
+		return this.faceUp;
+	}
+	
+	
+	/**
 	 * Used Cards Getter
 	 * @return The number of cards used in the round
 	 */
@@ -66,13 +75,12 @@ public class Player {
 	}
 	
 	
-	public Card getCardInPlay() {
-		return this.cardInPlay;
-	}
-	
-	
-	public void setCardInPlay(Card card) {
-		this.cardInPlay = card;
+	/**
+	 * Face-Up Card Setter
+	 * @param card
+	 */
+	public void setFaceUp(Card card) {
+		this.faceUp = card;
 	}
 	
 	
