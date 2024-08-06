@@ -1,4 +1,4 @@
-# War-Interactive-
+# War-Card-Game-Interactive
 Interactive implementation of the card game War
 
 Rules:
